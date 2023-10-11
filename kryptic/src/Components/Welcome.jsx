@@ -51,7 +51,7 @@ function Welcome() {
             Send Crypto <br /> across the globe.
           </h1>
           <p className="text-white font-light my-10 sm:mt-7 text-start">
-            Explore the world of crypto, Buy and sell crypto Currencies with
+            Explore the world of crypto, Buy and sell crypto currencies with
             kryptic. <br />
           </p>
           {!currentAccount ? (
