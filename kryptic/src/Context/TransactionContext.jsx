@@ -33,6 +33,7 @@ export const TransactionContextProvider = ({ children }) => {
     localStorage.getItem("transactionCount")
   );
   const [transactions, setTransactions] = useState([]);
+  const [transactionLoading, setTransactionLoading] = useState(false);
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: e }));
@@ -42,10 +43,10 @@ export const TransactionContextProvider = ({ children }) => {
     try {
       if (ethereum) {
         const transactionsContract = createEthereumContract();
-
+        setTransactionLoading(true);
         const availableTransactions =
           await transactionsContract.getAllTransactions();
-
+        setTransactionLoading(false);
         const structuredTransactions = availableTransactions.map(
           (transaction) => ({
             addressto: transaction.reciever,
@@ -79,7 +80,6 @@ export const TransactionContextProvider = ({ children }) => {
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
       }
-      console.log(currentAccount);
     } catch (error) {
       console.log(error);
     }
@@ -176,18 +176,6 @@ export const TransactionContextProvider = ({ children }) => {
   }, [transactionCount]);
 
   return (
-    // <TransactionContext.Provider
-    //   value={{
-    //     connectWallet,
-    //     currentAccount,
-    //     formData,
-    //     handleChange,
-    //     sendTransaction,
-    //     transactions,
-    //   }}
-    // >
-    //   {children}
-    // </TransactionContext.Provider>
     <TransactionContext.Provider
       value={{
         transactionCount,
@@ -198,6 +186,7 @@ export const TransactionContextProvider = ({ children }) => {
         sendTransaction,
         handleChange,
         formData,
+        transactionLoading,
       }}
     >
       {children}

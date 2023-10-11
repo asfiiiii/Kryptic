@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 
-import dummyData from "./utils/dummyData";
 import { TransactionContext } from "../Context/TransactionContext";
 import { shortenAddress } from "./utils/shortenAddress";
 import useFetch from "../CustomHooks/UseFetch";
+import Loader from "./Loader";
 
 const TransactionCard = ({
   addressto,
@@ -50,20 +50,32 @@ const TransactionCard = ({
 };
 
 function Transactions() {
-  const { transactions, currentAccount } = useContext(TransactionContext);
-  {
-    console.log(transactions);
-  }
+  const { transactions, currentAccount, transactionLoading } =
+    useContext(TransactionContext);
+
   return (
     <div className=" gradient-bg-transactions p-10 font-semibold">
-      <div>
-        <h2 className="text-white text-3xl">Recent Transactions</h2>
-      </div>
-      <div className=" flex flex-wrap  gap-4 m-4 my-10 items-center justify-center">
-        {transactions.reverse().map((transaction, i) => (
-          <TransactionCard key={i} {...transaction} />
-        ))}
-      </div>
+      {currentAccount && (
+        <div>
+          <div>
+            <h2 className="text-white text-3xl">Recent Transactions</h2>
+          </div>
+          {transactionLoading ? (
+            <div className="my-5">
+              <Loader
+                message={"Loading Recent Transactions"}
+                size={"h-14 w-14"}
+              />
+            </div>
+          ) : (
+            <div className=" flex flex-wrap  gap-4 m-4 my-10 items-center justify-center">
+              {transactions.reverse().map((transaction, i) => (
+                <TransactionCard key={i} {...transaction} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

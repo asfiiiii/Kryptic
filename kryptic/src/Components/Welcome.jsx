@@ -91,7 +91,7 @@ function Welcome() {
         </div>
       </div>
       <div className="flex flex-col items-center justify-start ml-6 m-4">
-        <div className="flex flex-col items-start justify-between p-2 mx-2 w-72 h-40  eth-card rounded-2xl">
+        <div className="flex flex-col items-start justify-between p-2 mx-2 w-72 h-40 shadow-lg eth-card rounded-2xl">
           <div className="flex  justify-between w-full">
             <div className="w-10 h-10 rounded-3xl flex items-center justify-center  border-white border-2">
               <Ethereum className="text-white" size="20" />
@@ -135,7 +135,10 @@ function Welcome() {
 
           <div className="w-full mt-2">
             {isLoading ? (
-              <Loader />
+              <Loader
+                message={"Transaction being Processed"}
+                size={"h-10 w-10"}
+              />
             ) : (
               <button
                 onClick={handleSubmit}

@@ -1,8 +1,10 @@
-function Loader() {
+function Loader({ message, size }) {
   return (
     <div className="flex justify-center items-center py-3 flex-col gap-3">
-      <div className="rounded-full animate-spin h-10 w-10 gradient-border"></div>
-      <p className="text-xs text-gray-400">Transaction being processed</p>
+      <div
+        className={`rounded-full animate-spin ${size} gradient-border`}
+      ></div>
+      <p className="text-xs text-gray-400 mt-2">{message}</p>
     </div>
   );
 }

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import logo from "../images/logo.png";
 import ToggleButton from "@iconscout/react-unicons/icons/uil-bars";
 import CrossButton from "@iconscout/react-unicons/icons/uil-times";
 import Rocket from "@iconscout/react-unicons/icons/uil-rocket";
+import { TransactionContext } from "../Context/TransactionContext";
 
 const ListItem = ({ listVAlue, classProp }) => {
   return <li className={`mx-4 cursor-pointer ${classProp}`}>{listVAlue}</li>;
@@ -10,10 +11,11 @@ const ListItem = ({ listVAlue, classProp }) => {
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
+  const { currentAccount } = useContext(TransactionContext);
 
   return (
     <div className="w-full flex flex-initial md:justify-center justify-between p-4">
-      <div className="md:flex-[0.5] flex-initial  mt-2 justify-center items-center">
+      <div className="md:flex-[0.7] flex-initial  mt-2 justify-center items-center">
         <img src={logo} alt="logo" className="w-32" />
       </div>
       <ul className="text-white md:flex hidden flex-initial justify-center items-center">
@@ -26,9 +28,12 @@ function Navbar() {
             />
           )
         )}
-        <li className="bg-blue-800 text-white font-semibold rounded-full px-4 py-2 ml-3">
-          Login <Rocket className="inline-block ml-2 mb-1" size="20" />
-        </li>
+
+        {!currentAccount && (
+          <li className="bg-blue-800 text-white font-semibold rounded-full px-4 py-2 ml-3">
+            Login <Rocket className="inline-block ml-2 mb-1" size="20" />
+          </li>
+        )}
       </ul>
       <div className="md:hidden">
         {!toggle ? (
@@ -66,9 +71,11 @@ function Navbar() {
               />
             )
           )}
-          <li className="bg-blue-600 text-white font-semibold rounded-full px-2 py-2 mx-4 my-4">
-            Login
-          </li>
+          {!currentAccount && (
+            <li className="bg-blue-600 text-white font-semibold rounded-full px-2 py-2 mx-4 my-4">
+              Login
+            </li>
+          )}
         </ul>
       )}
     </div>
